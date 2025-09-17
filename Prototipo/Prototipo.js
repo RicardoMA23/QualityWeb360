@@ -1,3 +1,35 @@
+         // Verificar autenticación al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+        const isAuthenticated = localStorage.getItem('isAuthenticated');
+        
+        if (!isAuthenticated || isAuthenticated !== 'true') {
+            document.getElementById('loginOverlay').style.display = 'flex';
+        } else {
+            document.getElementById('loginOverlay').style.display = 'none';
+        }
+        
+        // Manejar el formulario de login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Validación simple (en un caso real, esto se haría contra un servidor)
+            if (username === 'admin' && password === 'admin123') {
+                // Guardar estado de autenticación
+                localStorage.setItem('isAuthenticated', 'true');
+                localStorage.setItem('username', username);
+                
+                // Ocultar overlay de login
+                document.getElementById('loginOverlay').style.display = 'none';
+            } else {
+                // Mostrar mensaje de error
+                document.getElementById('errorMessage').classList.remove('d-none');
+            }
+        });
+    });
+
         document.addEventListener('DOMContentLoaded', function() {
             // Navegación entre secciones
             const navLinks = document.querySelectorAll('.nav-link');
